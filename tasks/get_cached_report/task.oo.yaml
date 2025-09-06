@@ -1,0 +1,52 @@
+inputs_def:
+  - handle: api_key
+    description: "Financial Report Analysis API Key"
+    json_schema:
+      contentMediaType: oomol/secret
+      type: string
+    value: ${{OO_SECRET:FinancialAPI,Financial Report API,API_KEY}}
+
+  - handle: base_url
+    description: "API base URL"
+    json_schema:
+      type: string
+      default: "https://api.example.com"
+    nullable: false
+
+  - handle: company_symbol
+    description: "Company stock symbol to filter by (optional)"
+    json_schema:
+      type: string
+    nullable: true
+
+  - handle: report_period
+    description: "Report period to filter by (e.g., 2023Q4, 2023)"
+    json_schema:
+      type: string
+    nullable: true
+
+outputs_def:
+  - handle: report_data
+    description: "Cached financial report data"
+    json_schema:
+      type: object
+
+  - handle: status
+    description: "API call status"
+    json_schema:
+      type: string
+
+  - handle: message
+    description: "Status message or error details"
+    json_schema:
+      type: string
+
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+
+title: "Get Cached Report"
+icon: ":carbon:report:"
+description: "Retrieve cached financial report data from the API. Can be filtered by company symbol and/or report period for specific data retrieval."

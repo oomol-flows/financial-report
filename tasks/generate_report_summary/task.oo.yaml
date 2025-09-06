@@ -1,0 +1,58 @@
+inputs_def:
+  - handle: api_key
+    description: "Financial Report Analysis API Key"
+    json_schema:
+      contentMediaType: oomol/secret
+      type: string
+    value: ${{OO_SECRET:FinancialAPI,Financial Report API,API_KEY}}
+
+  - handle: base_url
+    description: "API base URL"
+    json_schema:
+      type: string
+      default: "https://api.example.com"
+    nullable: false
+
+  - handle: company_symbol
+    description: "Company stock symbol (required for analysis)"
+    json_schema:
+      type: string
+    nullable: true
+
+  - handle: report_period
+    description: "Report period for analysis (e.g., 2023Q4, 2023)"
+    json_schema:
+      type: string
+    nullable: true
+
+  - handle: questions
+    description: "Analysis questions (JSON array or single question string)"
+    json_schema:
+      type: string
+    nullable: true
+
+outputs_def:
+  - handle: summary_result
+    description: "Generated financial analysis summary"
+    json_schema:
+      type: object
+
+  - handle: status
+    description: "API call status"
+    json_schema:
+      type: string
+
+  - handle: message
+    description: "Status message or error details"
+    json_schema:
+      type: string
+
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+
+title: "Generate Report Summary"
+icon: ":carbon:document-tasks:"
+description: "Generate customized financial analysis summaries based on company data, time periods, and specific questions. Creates detailed analytical reports."

@@ -1,0 +1,30 @@
+{
+  "nodes": {
+    "financial_analyzer#1": {
+      "contentWidth": 631.23046875,
+      "rfNode": {
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    "get_cached_periods#1": {
+      "rfNode": {
+        "position": {
+          "x": 165.705747162117,
+          "y": 154.7828642744764
+        }
+      }
+    },
+    "get_cached_report#1": {
+      "contentWidth": 597.7034780237036,
+      "rfNode": {
+        "position": {
+          "x": 8.155211626960863,
+          "y": 500.34028905670334
+        }
+      }
+    }
+  }
+}

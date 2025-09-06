@@ -1,0 +1,40 @@
+inputs_def:
+  - handle: api_key
+    description: "Financial Report Analysis API Key"
+    json_schema:
+      contentMediaType: oomol/secret
+      type: string
+    value: ${{OO_SECRET:FinancialAPI,Financial Report API,API_KEY}}
+
+  - handle: base_url
+    description: "API base URL"
+    json_schema:
+      type: string
+      default: "https://api.example.com"
+    nullable: false
+
+outputs_def:
+  - handle: periods_list
+    description: "List of available cached report periods"
+    json_schema:
+      type: object
+
+  - handle: status
+    description: "API call status"
+    json_schema:
+      type: string
+
+  - handle: message
+    description: "Status message or error details"
+    json_schema:
+      type: string
+
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+
+title: "Get Cached Periods"
+icon: ":carbon:calendar:"
+description: "Retrieve available cached financial report periods from the API. Shows which periods have pre-cached data available for faster access."

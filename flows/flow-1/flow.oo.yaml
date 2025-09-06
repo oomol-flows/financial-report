@@ -1,0 +1,36 @@
+nodes:
+  - node_id: financial_analyzer#1
+    task: self::financial_report_analyzer
+    inputs_from:
+      - handle: api_key
+        value: "${{OO_SECRET:Custom,market-lens,api-key}}"
+      - handle: analysis_type
+        value: "cached_periods"
+      - handle: base_url
+        value: "https://market-lens.innolabs.cc"
+      - handle: company_symbol
+        value:
+      - handle: report_period
+        value:
+      - handle: questions
+        value:
+  - node_id: get_cached_periods#1
+    title: "Get Cached Periods #1"
+    inputs_from:
+      - handle: api_key
+        value: ${{OO_SECRET:Custom,market-lens,api-key}}
+      - handle: base_url
+        value: https://market-lens.innolabs.cc
+    task: self::get_cached_periods
+  - node_id: get_cached_report#1
+    title: "Get Cached Report #1"
+    inputs_from:
+      - handle: api_key
+        value: ${{OO_SECRET:Custom,market-lens,api-key}}
+      - handle: base_url
+        value: https://market-lens.innolabs.cc
+      - handle: company_symbol
+        value: ZIM
+      - handle: report_period
+        value:
+    task: self::get_cached_report

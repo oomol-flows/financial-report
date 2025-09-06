@@ -1,0 +1,40 @@
+inputs_def:
+  - handle: api_key
+    description: "Financial Report Analysis API Key"
+    json_schema:
+      contentMediaType: oomol/secret
+      type: string
+    value: ${{OO_SECRET:FinancialAPI,Financial Report API,API_KEY}}
+
+  - handle: base_url
+    description: "API base URL"
+    json_schema:
+      type: string
+      default: "https://api.example.com"
+    nullable: false
+
+outputs_def:
+  - handle: questions_list
+    description: "List of predefined analysis questions"
+    json_schema:
+      type: object
+
+  - handle: status
+    description: "API call status"
+    json_schema:
+      type: string
+
+  - handle: message
+    description: "Status message or error details"
+    json_schema:
+      type: string
+
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+
+title: "Get Predefined Questions"
+icon: ":carbon:help:"
+description: "Retrieve predefined financial analysis questions from the API. These questions can be used for generating customized financial reports."
