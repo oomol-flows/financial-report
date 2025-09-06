@@ -6,30 +6,50 @@ inputs_def:
       type: string
     value: ${{OO_SECRET:FinancialAPI,Financial Report API,API_KEY}}
 
-  - handle: base_url
-    description: "API base URL"
+  - handle: ticker
+    description: "Company stock ticker symbol (required for analysis)"
     json_schema:
       type: string
-      default: "https://api.example.com"
+    value: ""
     nullable: false
 
-  - handle: company_symbol
-    description: "Company stock symbol (required for analysis)"
+  - handle: years
+    description: "Number of years for analysis"
     json_schema:
-      type: string
-    nullable: true
+      type: integer
+    value: 1
+    nullable: false
 
-  - handle: report_period
-    description: "Report period for analysis (e.g., 2023Q4, 2023)"
+  - handle: question_group
+    description: "Question group type (brief, detailed, etc.)"
     json_schema:
       type: string
-    nullable: true
+    value: "brief"
+    nullable: false
 
-  - handle: questions
-    description: "Analysis questions (JSON array or single question string)"
+  - handle: question_ids
+    description: "Array of specific question IDs"
     json_schema:
-      type: string
-    nullable: true
+      type: array
+      items:
+        type: string
+    value:
+      []
+    nullable: false
+
+  - handle: batch
+    description: "Whether to process in batch mode"
+    json_schema:
+      type: boolean
+    value: false
+    nullable: false
+
+  - handle: use_cache
+    description: "Whether to use cached results"
+    json_schema:
+      type: boolean
+    value: true
+    nullable: false
 
 outputs_def:
   - handle: summary_result
@@ -55,4 +75,7 @@ executor:
 
 title: "Generate Report Summary"
 icon: ":carbon:document-tasks:"
-description: "Generate customized financial analysis summaries based on company data, time periods, and specific questions. Creates detailed analytical reports."
+description: "Generate customized financial analysis summaries based on company
+  data, time periods, and specific questions. Creates detailed analytical
+  reports."
+private: true

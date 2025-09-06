@@ -2,7 +2,6 @@
 import typing
 class Inputs(typing.TypedDict):
     api_key: str
-    base_url: str
 class Outputs(typing.TypedDict):
     questions_list: dict
     status: str
@@ -41,7 +40,7 @@ def main(params: Inputs, _context: Context) -> Outputs:
     """
     
     api_key = params["api_key"]
-    base_url = params["base_url"].rstrip("/")
+    base_url = "https://market-lens.innolabs.cc"
     
     # Prepare headers with API key
     headers = {

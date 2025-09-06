@@ -6,23 +6,24 @@ inputs_def:
       type: string
     value: ${{OO_SECRET:FinancialAPI,Financial Report API,API_KEY}}
 
-  - handle: base_url
-    description: "API base URL"
+  - handle: ticker
+    description: "Required stock ticker symbol"
     json_schema:
       type: string
-      default: "https://api.example.com"
     nullable: false
 
-  - handle: company_symbol
-    description: "Company stock symbol to filter by (optional)"
+  - handle: year
+    description: "Year for the report (optional)"
     json_schema:
-      type: string
+      type: integer
+    value:
     nullable: true
 
-  - handle: report_period
-    description: "Report period to filter by (e.g., 2023Q4, 2023)"
+  - handle: quarter
+    description: "Quarter for the report (optional)"
     json_schema:
-      type: string
+      type: integer
+    value:
     nullable: true
 
 outputs_def:
@@ -49,4 +50,5 @@ executor:
 
 title: "Get Cached Report"
 icon: ":carbon:report:"
-description: "Retrieve cached financial report data from the API. Can be filtered by company symbol and/or report period for specific data retrieval."
+description: "Retrieve cached financial report data from the API. Can be
+  filtered by company symbol and/or report period for specific data retrieval."

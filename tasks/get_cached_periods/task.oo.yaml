@@ -6,13 +6,6 @@ inputs_def:
       type: string
     value: ${{OO_SECRET:FinancialAPI,Financial Report API,API_KEY}}
 
-  - handle: base_url
-    description: "API base URL"
-    json_schema:
-      type: string
-      default: "https://api.example.com"
-    nullable: false
-
 outputs_def:
   - handle: periods_list
     description: "List of available cached report periods"
@@ -37,4 +30,5 @@ executor:
 
 title: "Get Cached Periods"
 icon: ":carbon:calendar:"
-description: "Retrieve available cached financial report periods from the API. Shows which periods have pre-cached data available for faster access."
+description: "Retrieve available cached financial report periods from the API.
+  Shows which periods have pre-cached data available for faster access."

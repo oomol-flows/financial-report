@@ -2,9 +2,9 @@
 import typing
 class Inputs(typing.TypedDict):
     api_key: str
-    base_url: str
-    company_symbol: str | None
-    report_period: str | None
+    ticker: str
+    year: int | None
+    quarter: int | None
 class Outputs(typing.TypedDict):
     report_data: dict
     status: str
@@ -35,7 +35,7 @@ def main(params: Inputs, _context: Context) -> Outputs:
     Get Cached Report - Retrieve cached financial report data from API
     
     Args:
-        params: Input parameters including API key, base URL, and optional filters
+        params: Input parameters including API key, ticker, and optional year/quarter
         _context: OOMOL context object (unused)
         
     Returns:
@@ -43,7 +43,8 @@ def main(params: Inputs, _context: Context) -> Outputs:
     """
     
     api_key = params["api_key"]
-    base_url = params["base_url"].rstrip("/")
+    base_url = "https://market-lens.innolabs.cc"
+    ticker = params["ticker"]
     
     # Prepare headers with API key
     headers = {
@@ -54,12 +55,12 @@ def main(params: Inputs, _context: Context) -> Outputs:
     try:
         # GET /api/fundamental/cached_report
         url = f"{base_url}/api/fundamental/cached_report"
-        query_params = {}
+        query_params = {"ticker": ticker}
         
-        if params.get("company_symbol"):
-            query_params["symbol"] = params["company_symbol"]
-        if params.get("report_period"):
-            query_params["period"] = params["report_period"]
+        if params.get("year"):
+            query_params["year"] = params["year"]
+        if params.get("quarter"):
+            query_params["quarter"] = params["quarter"]
         
         response = _make_request_with_retry(url, headers, query_params)
         

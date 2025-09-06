@@ -2,10 +2,12 @@
 import typing
 class Inputs(typing.TypedDict):
     api_key: str
-    base_url: str
-    company_symbol: str | None
-    report_period: str | None
-    questions: str | None
+    ticker: str
+    years: int
+    question_group: str
+    question_ids: list[str]
+    batch: bool
+    use_cache: bool
 class Outputs(typing.TypedDict):
     summary_result: dict
     status: str
@@ -44,7 +46,7 @@ def main(params: Inputs, _context: Context) -> Outputs:
     """
     
     api_key = params["api_key"]
-    base_url = params["base_url"].rstrip("/")
+    base_url = "https://market-lens.innolabs.cc"
     
     # Prepare headers with API key
     headers = {
@@ -56,24 +58,19 @@ def main(params: Inputs, _context: Context) -> Outputs:
         # POST /api/fundamental/report_summary
         url = f"{base_url}/api/fundamental/report_summary"
         
-        # Prepare request body
-        request_body = {}
-        
-        if params.get("company_symbol"):
-            request_body["company_symbol"] = params["company_symbol"]
-        if params.get("report_period"):
-            request_body["report_period"] = params["report_period"]
-        if params.get("questions"):
-            try:
-                # Try to parse questions as JSON array
-                request_body["questions"] = json.loads(params["questions"])
-            except json.JSONDecodeError:
-                # If not JSON, treat as single question
-                request_body["questions"] = [params["questions"]]
+        # Prepare request body with correct parameter structure
+        request_body = {
+            "ticker": params["ticker"],
+            "years": params["years"],
+            "question_group": params["question_group"],
+            "question_ids": params["question_ids"],
+            "batch": params["batch"],
+            "use_cache": params["use_cache"]
+        }
         
         # Validate required parameters for summary generation
-        if not request_body.get("company_symbol"):
-            raise ValueError("Company symbol is recommended for meaningful analysis. Proceeding with generic analysis.")
+        if not request_body.get("ticker"):
+            raise ValueError("Ticker symbol is required for analysis.")
         
         response = _make_request_with_retry(url, headers, request_body)
         

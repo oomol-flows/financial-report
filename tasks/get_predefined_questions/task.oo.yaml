@@ -6,13 +6,6 @@ inputs_def:
       type: string
     value: ${{OO_SECRET:FinancialAPI,Financial Report API,API_KEY}}
 
-  - handle: base_url
-    description: "API base URL"
-    json_schema:
-      type: string
-      default: "https://api.example.com"
-    nullable: false
-
 outputs_def:
   - handle: questions_list
     description: "List of predefined analysis questions"
@@ -37,4 +30,5 @@ executor:
 
 title: "Get Predefined Questions"
 icon: ":carbon:help:"
-description: "Retrieve predefined financial analysis questions from the API. These questions can be used for generating customized financial reports."
+description: "Retrieve predefined financial analysis questions from the API.
+  These questions can be used for generating customized financial reports."

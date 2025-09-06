@@ -1,28 +1,26 @@
 {
   "nodes": {
-    "financial_analyzer#1": {
-      "contentWidth": 631.23046875,
+    "get_cached_report#1": {
       "rfNode": {
         "position": {
-          "x": 0,
-          "y": 0
+          "x": 909.3698165659484,
+          "y": 343.48128235647596
+        }
+      }
+    },
+    "get_predefined_questions#1": {
+      "rfNode": {
+        "position": {
+          "x": 1695.839607478946,
+          "y": 424.481282356476
         }
       }
     },
     "get_cached_periods#1": {
       "rfNode": {
         "position": {
-          "x": 165.705747162117,
-          "y": 154.7828642744764
-        }
-      }
-    },
-    "get_cached_report#1": {
-      "contentWidth": 597.7034780237036,
-      "rfNode": {
-        "position": {
-          "x": 8.155211626960863,
-          "y": 500.34028905670334
+          "x": 1642.8334463556312,
+          "y": 823.9240708961446
         }
       }
     }
