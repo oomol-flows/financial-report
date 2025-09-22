@@ -1,7 +1,6 @@
 #region generated meta
 import typing
-class Inputs(typing.TypedDict):
-    api_key: str
+Inputs = typing.Dict[str, typing.Any]
 class Outputs(typing.TypedDict):
     questions_list: dict
     status: str
@@ -25,7 +24,7 @@ def _make_request_with_retry(url: str, headers: dict, max_retries: int = 3) -> r
                 time.sleep(2 ** attempt)  # Exponential backoff
                 continue
             raise e
-
+    raise Exception("Failed to get predefined questions after multiple attempts")
 
 def main(params: Inputs, _context: Context) -> Outputs:
     """
@@ -39,18 +38,16 @@ def main(params: Inputs, _context: Context) -> Outputs:
         List of predefined questions, status, and messages
     """
     
-    api_key = params["api_key"]
-    base_url = "https://market-lens.innolabs.cc"
+    base_url = "https://console.oomol.com"
     
     # Prepare headers with API key
     headers = {
-        "Authorization": f"Bearer {api_key}",
+        "Authorization": _context.oomol_llm_env.get('api_key'),
         "Content-Type": "application/json"
     }
     
     try:
-        # GET /api/fundamental/predefined_report_questions
-        url = f"{base_url}/api/fundamental/predefined_report_questions"
+        url = f"{base_url}/api/tasks/custom/financial-report/fundamental/predefined_report_questions"
         response = _make_request_with_retry(url, headers)
         
         # Handle different HTTP status codes

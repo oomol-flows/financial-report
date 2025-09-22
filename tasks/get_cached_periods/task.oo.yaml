@@ -1,10 +1,5 @@
 inputs_def:
-  - handle: api_key
-    description: "Financial Report Analysis API Key"
-    json_schema:
-      contentMediaType: oomol/secret
-      type: string
-    value: ${{OO_SECRET:FinancialAPI,Financial Report API,API_KEY}}
+  []
 
 outputs_def:
   - handle: periods_list

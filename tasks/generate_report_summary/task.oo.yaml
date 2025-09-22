@@ -79,3 +79,5 @@ description: "Generate customized financial analysis summaries based on company
   data, time periods, and specific questions. Creates detailed analytical
   reports."
 private: true
+ui:
+  default_width: 572.9295298165138

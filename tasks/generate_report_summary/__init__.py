@@ -55,8 +55,8 @@ def main(params: Inputs, _context: Context) -> Outputs:
     }
     
     try:
-        # POST /api/fundamental/report_summary
-        url = f"{base_url}/api/fundamental/report_summary"
+        # POST /api/fundamental/create_report
+        url = f"{base_url}/api/fundamental/create_report"
         
         # Prepare request body with correct parameter structure
         request_body = {
