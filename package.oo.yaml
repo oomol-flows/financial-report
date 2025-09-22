@@ -1,4 +1,4 @@
-version: 0.0.1
+version: 0.0.2
 scripts:
   bootstrap: |
     npm install
@@ -6,9 +6,6 @@ scripts:
 icon: ./icon.png
 name: financial-report
 repository: https://github.com/oomol-flows/financial-report.git
-releaseNotes: init
-displayName: Financial Report
-description: A comprehensive OOMOL workflow system for financial report analysis
-  and data retrieval. This project provides automated tools for analyzing
-  company financial data, generating custom reports, and accessing cached
-  financial information through a structured API interface.
+releaseNotes: "feat: use oomol-api key to call service"
+displayName: "%financial-report%"
+description: "%a-comprehensive-oomol-workflow-system-for-financial-report-analy%"
