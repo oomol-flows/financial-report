@@ -1,14 +1,13 @@
 #region generated meta
 import typing
-class Inputs(typing.TypedDict):
-    api_key: str
+Inputs = typing.Dict[str, typing.Any]
 class Outputs(typing.TypedDict):
     periods_list: dict
     status: str
     message: str
 #endregion
 
-from oocana import Context
+from oocana import Context, context
 import requests
 import json
 import time
@@ -25,32 +24,20 @@ def _make_request_with_retry(url: str, headers: dict, max_retries: int = 3) -> r
                 time.sleep(2 ** attempt)  # Exponential backoff
                 continue
             raise e
+    raise Exception("Failed to fetch data after multiple attempts")
 
 
 def main(params: Inputs, _context: Context) -> Outputs:
-    """
-    Get Cached Periods - Retrieve available cached report periods from API
-    
-    Args:
-        params: Input parameters including API key and base URL
-        _context: OOMOL context object (unused)
-        
-    Returns:
-        List of available cached periods, status, and messages
-    """
-    
-    api_key = params["api_key"]
-    base_url = "https://market-lens.innolabs.cc"
-    
-    # Prepare headers with API key
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
-    }
+    base_url = "https://console.oomol.com"
     
     try:
-        # GET /api/fundamental/cached_report_periods
-        url = f"{base_url}/api/fundamental/cached_report_periods"
+        # Prepare headers with API key
+        headers = {
+            "Authorization": _context.oomol_llm_env.get("api_key"),
+            "Content-Type": "application/json"
+        }
+
+        url = f"{base_url}/api/tasks/custom/financial-report/fundamental/cached_report_periods"
         response = _make_request_with_retry(url, headers)
         
         # Handle different HTTP status codes
@@ -81,6 +68,9 @@ def main(params: Inputs, _context: Context) -> Outputs:
             raise ValueError("Rate limit exceeded. Please retry after some time.")
             
         elif 500 <= response.status_code < 600:
+            # 打印出response body
+            print(response.text)
+
             raise ValueError(f"Server error {response.status_code}. Service may be temporarily unavailable.")
         else:
             response.raise_for_status()
@@ -93,3 +83,5 @@ def main(params: Inputs, _context: Context) -> Outputs:
         
     except Exception as e:
         raise ValueError(f"Unexpected error: {str(e)}")
+    
+    raise ValueError("No cached periods found")

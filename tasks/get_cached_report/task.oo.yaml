@@ -1,11 +1,4 @@
 inputs_def:
-  - handle: api_key
-    description: "Financial Report Analysis API Key"
-    json_schema:
-      contentMediaType: oomol/secret
-      type: string
-    value: ${{OO_SECRET:FinancialAPI,Financial Report API,API_KEY}}
-
   - handle: ticker
     description: "Required stock ticker symbol"
     json_schema:

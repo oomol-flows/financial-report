@@ -1,7 +1,7 @@
 #region generated meta
+from datetime import datetime
 import typing
 class Inputs(typing.TypedDict):
-    api_key: str
     ticker: str
     year: int | None
     quarter: int | None
@@ -28,6 +28,7 @@ def _make_request_with_retry(url: str, headers: dict, params: dict = None, max_r
                 time.sleep(2 ** attempt)  # Exponential backoff
                 continue
             raise e
+    raise Exception("Failed to get cached report after multiple attempts")
 
 
 def main(params: Inputs, _context: Context) -> Outputs:
@@ -42,25 +43,29 @@ def main(params: Inputs, _context: Context) -> Outputs:
         Cached report data, status, and messages
     """
     
-    api_key = params["api_key"]
-    base_url = "https://market-lens.innolabs.cc"
+    base_url = "https://console.oomol.com"
     ticker = params["ticker"]
     
     # Prepare headers with API key
     headers = {
-        "Authorization": f"Bearer {api_key}",
+        "Authorization": _context.oomol_llm_env.get('api_key'),
         "Content-Type": "application/json"
     }
     
     try:
         # GET /api/fundamental/cached_report
-        url = f"{base_url}/api/fundamental/cached_report"
+        url = f"{base_url}/api/tasks/custom/financial-report/fundamental/cached_report"
         query_params = {"ticker": ticker}
         
         if params.get("year"):
             query_params["year"] = params["year"]
+        else:
+            query_params["year"] = datetime.now().year
+        
         if params.get("quarter"):
             query_params["quarter"] = params["quarter"]
+        else:
+            query_params["quarter"] = 1
         
         response = _make_request_with_retry(url, headers, query_params)
         

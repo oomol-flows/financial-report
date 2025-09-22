@@ -2,12 +2,10 @@ nodes:
   - node_id: get_cached_report#1
     title: "Get Cached Report #1"
     inputs_from:
-      - handle: api_key
-        value: ${{OO_SECRET:Custom,market-lens,api-key}}
       - handle: ticker
-        value: RBLX
+        value: 0697.HK
       - handle: year
-        value: null
+        value:
       - handle: quarter
         value: null
     task: self::get_cached_report
@@ -15,11 +13,11 @@ nodes:
     title: "Get Predefined Questions #1"
     inputs_from:
       - handle: api_key
-        value: ${{OO_SECRET:Custom,market-lens,api-key}}
+        value: ${{OO_SECRET:Custom,finantial-test,key}}
     task: self::get_predefined_questions
   - node_id: get_cached_periods#1
     title: "Get Cached Periods #1"
     inputs_from:
       - handle: api_key
-        value: ${{OO_SECRET:Custom,market-lens,api-key}}
+        value: ${{OO_SECRET:Custom,finantial-test,key}}
     task: self::get_cached_periods
