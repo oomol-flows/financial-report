@@ -20,22 +20,26 @@ inputs_def:
                     type: string
                   answer:
                     type: string
-          required: [year, quarter, reports]
-      required: [data]
+          required:
+            - year
+            - quarter
+            - reports
+      required:
+        - data
     nullable: false
 
   - handle: output_filename
     description: "Output filename for the MD report (without extension)"
     json_schema:
       type: string
-    value: "financial_report"
+    value: financial_report
     nullable: false
 
   - handle: company_name
     description: "Company name for the report header"
     json_schema:
       type: string
-    value: ""
+    value:
     nullable: true
 
   - handle: save_path
@@ -49,6 +53,7 @@ inputs_def:
             extensions:
               - md
         excludeAll: true
+    value:
     nullable: true
 
 outputs_def:
@@ -75,4 +80,5 @@ executor:
 
 title: "Generate MD Report"
 icon: ":carbon:document-export:"
-description: "Convert structured financial report data into comprehensive markdown reports with professional formatting and Q&A sections"
+description: "Convert structured financial report data into comprehensive
+  markdown reports with professional formatting and Q&A sections"

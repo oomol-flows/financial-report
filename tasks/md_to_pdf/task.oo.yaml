@@ -1,0 +1,91 @@
+inputs_def:
+  - handle: md_content
+    description: "Markdown content to convert to PDF"
+    json_schema:
+      type: string
+    value:
+    nullable: true
+
+  - handle: md_file_path
+    description: "Path to markdown file (alternative to md_content)"
+    json_schema:
+      type: string
+      ui:widget: file
+      ui:options:
+        filters:
+          - name: Markdown Files
+            extensions:
+              - md
+              - markdown
+        excludeAll: true
+    value:
+    nullable: true
+
+  - handle: output_filename
+    description: "Output filename for the PDF (without extension)"
+    json_schema:
+      type: string
+    value: document
+    nullable: false
+
+  - handle: save_path
+    description: "Path to save the PDF file"
+    json_schema:
+      type: string
+      ui:widget: save
+      ui:options:
+        filters:
+          - name: PDF Files
+            extensions:
+              - pdf
+        excludeAll: true
+    value:
+    nullable: true
+
+  - handle: title
+    description: "Document title for PDF metadata"
+    json_schema:
+      type: string
+    value:
+    nullable: true
+
+  - handle: author
+    description: "Document author for PDF metadata"
+    json_schema:
+      type: string
+    value:
+    nullable: true
+
+  - handle: css_style
+    description: "Custom CSS styles for PDF formatting"
+    json_schema:
+      type: string
+    value:
+    nullable: true
+
+outputs_def:
+  - handle: pdf_path
+    description: "Path where the PDF file was saved"
+    json_schema:
+      type: string
+
+  - handle: status
+    description: "Conversion status message"
+    json_schema:
+      type: string
+
+  - handle: file_size
+    description: "Size of the generated PDF file in bytes"
+    json_schema:
+      type: number
+
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+
+title: "Markdown to PDF Converter"
+icon: ":carbon:document-pdf:"
+description: "Convert Markdown content or files to PDF format with customizable
+  styling and metadata support"
