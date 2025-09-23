@@ -88,6 +88,23 @@ inputs_def:
     value: "default"
     nullable: false
 
+  - handle: show_page_numbers
+    description: "Show page numbers in the table of contents"
+    json_schema:
+      type: boolean
+    value: true
+    nullable: false
+
+  - handle: toc_style
+    description: "Table of contents style (simple, detailed)"
+    json_schema:
+      type: string
+      enum:
+        - "simple"
+        - "detailed"
+    value: "detailed"
+    nullable: false
+
 outputs_def:
   - handle: pdf_path
     description: "Path where the PDF file was saved"

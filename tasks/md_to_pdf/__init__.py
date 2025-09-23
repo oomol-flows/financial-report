@@ -11,6 +11,8 @@ class Inputs(typing.TypedDict):
     generate_toc: bool
     toc_title: str | None
     style_theme: typing.Literal["default", "minimal", "professional"]
+    show_page_numbers: bool
+    toc_style: typing.Literal["simple", "detailed"]
 class Outputs(typing.TypedDict):
     pdf_path: str
     status: str
@@ -80,7 +82,9 @@ def main(params: Inputs, _context) -> Outputs:
                 'baselevel': 1,
                 'toc_depth': 6,
                 'anchorlink': True,
-                'title': params.get('toc_title', 'Table of Contents')
+                'title': params.get('toc_title', 'Table of Contents'),
+                'slugify': lambda value, separator: value.lower().replace(' ', separator).replace('-', separator),
+                'separator': '-'
             }
         }
 
@@ -96,10 +100,20 @@ def main(params: Inputs, _context) -> Outputs:
         if params.get('generate_toc', True):
             if hasattr(md, 'toc') and md.toc:
                 toc_title = params.get('toc_title', 'Table of Contents')
+                toc_style = params.get('toc_style', 'detailed')
+                show_page_numbers = params.get('show_page_numbers', True)
+
+                # Add CSS class based on style and page numbers preference
+                toc_class = "toc"
+                if toc_style == 'simple' or not show_page_numbers:
+                    toc_class += " toc-simple"
+                else:
+                    toc_class += " toc-detailed"
+
                 toc_html = f"""
                 <div class="toc-container">
                     <h1 class="toc-title">{toc_title}</h1>
-                    <div class="toc">
+                    <div class="{toc_class}">
                         {md.toc}
                     </div>
                 </div>

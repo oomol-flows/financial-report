@@ -80,19 +80,63 @@ class PDFStyles:
         }
 
         .toc a {
-            color: #2c3e50;
+            color: #3498db;
             text-decoration: none;
-            display: block;
-            padding: 0.2em 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.3em 0.5em;
+            border-radius: 3px;
+            transition: all 0.2s ease;
         }
 
         .toc a:hover {
-            color: #3498db;
-            text-decoration: underline;
+            color: #2980b9;
+            background-color: #ecf0f1;
+            text-decoration: none;
+            transform: translateX(5px);
+        }
+
+        .toc a:after {
+            content: target-counter(attr(href), page);
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-left: auto;
+            padding-left: 1em;
+        }
+
+        .toc-simple .toc a:after {
+            display: none;
         }
 
         .page-break {
             page-break-after: always;
+        }
+
+        /* Enhanced TOC Navigation */
+        .toc-detailed .toc a {
+            border-left: 3px solid transparent;
+        }
+
+        .toc-detailed .toc a:hover {
+            border-left-color: #3498db;
+        }
+
+        .toc .toc-level-1 > a {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .toc .toc-level-2 > a {
+            font-weight: 500;
+        }
+
+        .toc .toc-level-3 > a,
+        .toc .toc-level-4 > a,
+        .toc .toc-level-5 > a,
+        .toc .toc-level-6 > a {
+            font-weight: normal;
+            opacity: 0.9;
         }
         """
 

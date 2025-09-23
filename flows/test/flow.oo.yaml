@@ -44,11 +44,15 @@ nodes:
       - handle: css_style
         value: null
       - handle: generate_toc
-        value: false
+        value: true
       - handle: toc_title
         value: "Table of Contents"
       - handle: style_theme
         value: professional
+      - handle: show_page_numbers
+        value: true
+      - handle: toc_style
+        value: detailed
     task: self::md_to_pdf
   - node_id: get_cached_periods#1
     title: "Get Cached Periods #1"
