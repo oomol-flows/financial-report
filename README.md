@@ -2,7 +2,7 @@
 
 A comprehensive OOMOL workflow system for financial report analysis and data retrieval. This project provides automated tools for analyzing company financial data, generating custom reports, and accessing cached financial information through a structured API interface.
 
-## 🎯 Project Purpose
+## 1. 🎯 Project Purpose
 
 This system enables users to:
 - **Analyze Company Financials**: Retrieve and analyze financial data for publicly traded companies
@@ -10,9 +10,9 @@ This system enables users to:
 - **Access Cached Data**: Efficiently retrieve pre-processed financial reports and periods
 - **Automate Workflows**: Build automated financial analysis pipelines using OOMOL's visual workflow system
 
-## 📊 Available Blocks (Tasks)
+## 2. 📊 Available Blocks (Tasks)
 
-### 1. Get Cached Report
+### 2.1 Get Cached Report
 **Purpose**: Retrieve cached financial report data from the API  
 **Icon**: 📊 `:carbon:report:`
 
@@ -31,7 +31,7 @@ This system enables users to:
 
 ---
 
-### 2. Get Cached Periods
+### 2.2 Get Cached Periods
 **Purpose**: Retrieve available cached financial report periods  
 **Icon**: 📅 `:carbon:calendar:`
 
@@ -47,7 +47,7 @@ This system enables users to:
 
 ---
 
-### 3. Get Predefined Questions
+### 2.3 Get Predefined Questions
 **Purpose**: Retrieve predefined financial analysis questions  
 **Icon**: ❓ `:carbon:help:`
 
@@ -63,7 +63,7 @@ This system enables users to:
 
 ---
 
-### 4. Generate Report Summary
+### 2.4 Generate Report Summary
 **Purpose**: Generate customized financial analysis summaries  
 **Icon**: 📋 `:carbon:document-tasks:`
 
@@ -83,7 +83,7 @@ This system enables users to:
 
 **Use Case**: Create comprehensive financial analysis reports based on specific criteria and questions.
 
-## 🔧 Setup and Installation
+## 3. 🔧 Setup and Installation
 
 1. **Install Dependencies**:
    ```bash
@@ -100,35 +100,35 @@ This system enables users to:
    oomol run bootstrap
    ```
 
-## 🚀 Usage Examples
+## 4. 🚀 Usage Examples
 
-### Basic Financial Analysis Workflow
+### 4.1 Basic Financial Analysis Workflow
 
 1. **Check Available Periods**: Use `Get Cached Periods` to see what data is available
 2. **Get Report Data**: Use `Get Cached Report` with a specific ticker symbol
 3. **Explore Questions**: Use `Get Predefined Questions` to see analysis options
 4. **Generate Summary**: Use `Generate Report Summary` to create a custom analysis
 
-### Sample Company Analysis
+### 4.2 Sample Company Analysis
 - Input ticker: `RBLX` (Roblox Corporation)
 - Retrieve cached data for recent periods
 - Generate analysis summary with predefined questions
 - Output comprehensive financial insights
 
-## 🔒 Security Features
+## 5. 🔒 Security Features
 
 - **API Key Management**: Secure storage of API credentials using OOMOL's secret management
 - **Error Handling**: Comprehensive error handling with retry logic for network requests
 - **Timeout Protection**: Built-in timeout mechanisms to prevent hanging requests
 
-## 🏗️ Architecture
+## 6. 🏗️ Architecture
 
 - **OOMOL Framework**: Built on OOMOL's visual workflow system
 - **Python Backend**: Core logic implemented in Python with robust error handling
 - **API Integration**: RESTful API integration with retry mechanisms
 - **Caching System**: Efficient data caching for improved performance
 
-## 📈 Workflow Capabilities
+## 7. 📈 Workflow Capabilities
 
 This system supports building complex financial analysis workflows by chaining blocks together:
 - Sequential data retrieval and analysis

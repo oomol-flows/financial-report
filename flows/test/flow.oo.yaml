@@ -21,7 +21,7 @@ nodes:
       - handle: company_name
         value: null
       - handle: save_path
-        value:
+        value: /oomol-driver/oomol-storage/md/uuussa.md
     task: self::generate_md_report
   - node_id: md_to_pdf#1
     title: "Markdown to PDF Converter #1"

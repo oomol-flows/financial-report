@@ -48,7 +48,9 @@ def main(params: Inputs, context: Context) -> Outputs:
             file_path = os.path.join(storage_dir, filename)
 
         # Ensure directory exists
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        dir_path = os.path.dirname(file_path)
+        if dir_path:  # Only create directory if file_path contains a directory
+            os.makedirs(dir_path, exist_ok=True)
 
         # Write MD file
         with open(file_path, 'w', encoding='utf-8') as f:
@@ -64,92 +66,211 @@ def main(params: Inputs, context: Context) -> Outputs:
         raise ValueError(f"Failed to generate MD report: {str(e)}")
 
 def generate_md_report(data: dict, company_name: str = None) -> str:
-    """Generate formatted markdown report"""
+    """Generate structured and standardized markdown report"""
 
     year = data["year"]
     quarter = data["quarter"]
     reports = data["reports"]
 
-    # Generate timestamp
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # Classify content by categories
+    classified_content = classify_content(reports)
 
-    # Build markdown content
     md_lines = []
 
-    # Header
+    # Document title
     if company_name:
-        md_lines.append(f"# {company_name} - Financial Analysis Report")
+        md_lines.append(f"# {company_name} 财务分析报告 ({year}Q{quarter})")
     else:
-        md_lines.append("# Financial Analysis Report")
+        md_lines.append(f"# 财务分析报告 ({year}Q{quarter})")
 
+    md_lines.extend(["", "---", ""])
+
+    # Generate and add table of contents
+    toc_content = generate_table_of_contents(classified_content)
+    md_lines.append(toc_content)
+
+    # First, add financial content directly under main title (no section header)
+    section_number = 1
+    if "financial" in classified_content and classified_content["financial"]:
+        financial_items = classified_content["financial"]
+
+        for item in financial_items:
+            question = item.get("question", "").strip()
+            answer = item.get("answer", "").strip()
+
+            if question and answer:
+                processed_answer = answer.replace("\\n", "\n")
+                md_lines.extend([
+                    f"## {section_number}. {question}",
+                    "",
+                    processed_answer,
+                    "",
+                    "---",
+                    ""
+                ])
+                section_number += 1
+
+        # Add separator after financial content
+        md_lines.extend(["", "---", ""])
+
+    # Generate other sections with numbered headings (excluding financial)
+    sections = [
+        ("business", "业务运营分析"),
+        ("analysis", "专项分析"),
+        ("management", "管理层分析"),
+        ("governance", "公司治理与合规"),
+        ("other", "其他信息")
+    ]
+    for section_key, section_title in sections:
+        if section_key in classified_content and classified_content[section_key]:
+            md_lines.extend([f"## {section_number}. {section_title}", ""])
+
+            # Add all subsections without limits
+            items = classified_content[section_key]
+
+            subsection_number = 1
+            for item in items:
+                question = item.get("question", "").strip()
+                answer = item.get("answer", "").strip()
+
+                if question and answer:
+                    processed_answer = answer.replace("\\n", "\n")
+                    md_lines.extend([
+                        f"### {section_number}.{subsection_number} {question}",
+                        "",
+                        processed_answer,
+                        "",
+                        "---",
+                        ""
+                    ])
+                    subsection_number += 1
+
+            section_number += 1
+
+    # Add document footer
     md_lines.extend([
-        "",
-        f"**Report Period:** {year} Q{quarter}",
-        f"**Generated:** {timestamp}",
         "",
         "---",
         ""
     ])
 
-    # Executive Summary
-    md_lines.extend([
-        "## Executive Summary",
-        "",
-        f"This report contains {len(reports)} key financial analysis points for the {year} Q{quarter} period.",
-        ""
-    ])
+    return "\n".join(md_lines)
 
-    # Table of Contents
-    md_lines.extend([
-        "## Table of Contents",
-        ""
-    ])
 
-    for i, report in enumerate(reports, 1):
-        question = report.get("question", "").strip()
-        if question:
-            # Create anchor link
-            anchor = question.lower().replace(" ", "-").replace("，", "").replace("。", "")
-            anchor = ''.join(c for c in anchor if c.isalnum() or c == '-')
-            md_lines.append(f"{i}. [{question}](#{anchor})")
+def generate_table_of_contents(classified_content: dict) -> str:
+    """Generate table of contents based on classified content"""
 
-    md_lines.extend(["", "---", ""])
+    toc_lines = ["## 目录", ""]
 
-    # Q&A Sections
-    md_lines.append("## Detailed Analysis")
-    md_lines.append("")
+    # Add financial content items (these appear directly under main title without section numbers)
+    toc_number = 1
+    if "financial" in classified_content and classified_content["financial"]:
+        financial_items = classified_content["financial"]
 
-    for i, report in enumerate(reports, 1):
+        for item in financial_items:
+            question = item.get("question", "").strip()
+            if question:
+                # Create anchor link compatible with markdown heading format
+                anchor = create_anchor_link(f"{toc_number}. {question}")
+                toc_lines.append(f"- [{toc_number}. {question}](#{anchor})")
+                toc_number += 1
+
+        toc_lines.append("")
+
+    # Add other sections with numbered headings
+    sections = [
+        ("business", "业务运营分析"),
+        ("analysis", "专项分析"),
+        ("management", "管理层分析"),
+        ("governance", "公司治理与合规"),
+        ("other", "其他信息")
+    ]
+
+    section_number = toc_number
+    for section_key, section_title in sections:
+        if section_key in classified_content and classified_content[section_key]:
+            anchor = create_anchor_link(f"{section_number}. {section_title}")
+            toc_lines.append(f"- [{section_number}. {section_title}](#{anchor})")
+
+            # Add all subsections without limits
+            items = classified_content[section_key]
+
+            subsection_number = 1
+            for item in items:
+                question = item.get("question", "").strip()
+                if question:
+                    anchor = create_anchor_link(f"{section_number}.{subsection_number} {question}")
+                    toc_lines.append(f"  - [{section_number}.{subsection_number} {question}](#{anchor})")
+                    subsection_number += 1
+
+            section_number += 1
+
+    toc_lines.extend(["", "---", ""])
+    return "\n".join(toc_lines)
+
+
+def create_anchor_link(text: str) -> str:
+    """Create a URL-safe anchor link from text"""
+    import re
+    # Convert to lowercase, replace spaces and special chars with hyphens
+    anchor = re.sub(r'[^\w\u4e00-\u9fff]+', '-', text.lower())
+    # Remove leading/trailing hyphens and multiple consecutive hyphens
+    anchor = re.sub(r'^-+|-+$', '', anchor)
+    anchor = re.sub(r'-+', '-', anchor)
+    return anchor
+
+
+def classify_content(reports: list) -> dict:
+    """Classify Q&A content into different categories"""
+
+    categories = {
+        "financial": [],      # 财务相关
+        "business": [],       # 业务运营
+        "analysis": [],       # 专项分析
+        "management": [],     # 管理层
+        "governance": [],     # 治理合规
+        "other": []          # 其他
+    }
+
+    # Keywords for classification
+    financial_keywords = ["收入", "利润", "负债", "资产", "现金流", "毛利", "股息", "财务", "盈利", "营收", "EBITDA", "成本", "费用", "税收"]
+    business_keywords = ["业务", "运营", "项目", "市场", "产品", "服务", "战略", "投资", "合作", "布局", "发展", "扩张", "竞争"]
+    analysis_keywords = ["分析", "操纵", "风险", "评估", "模型", "指标", "比率", "趋势", "预测", "展望"]
+    management_keywords = ["管理层", "高管", "董事", "薪酬", "激励", "员工", "人事", "变动", "任命", "离职"]
+    governance_keywords = ["治理", "合规", "监管", "审计", "内控", "制度", "规范", "透明度", "责任"]
+
+    for report in reports:
         question = report.get("question", "").strip()
         answer = report.get("answer", "").strip()
 
-        if question and answer:
-            # Create section header with anchor
-            anchor = question.lower().replace(" ", "-").replace("，", "").replace("。", "")
-            anchor = ''.join(c for c in anchor if c.isalnum() or c == '-')
+        if not question or not answer:
+            continue
 
-            # Process answer to handle escaped newlines
-            processed_answer = answer.replace("\\n", "\n")
+        # Classify based on keywords in question
+        classified = False
+        text_to_check = question + " " + answer[:100]  # Check first 100 chars of answer too
 
-            md_lines.extend([
-                f"### {i}. {question} {{#{anchor}}}",
-                "",
-                processed_answer,
-                "",
-                "---",
-                ""
-            ])
+        if any(keyword in text_to_check for keyword in financial_keywords):
+            categories["financial"].append(report)
+            classified = True
+        elif any(keyword in text_to_check for keyword in business_keywords):
+            categories["business"].append(report)
+            classified = True
+        elif any(keyword in text_to_check for keyword in analysis_keywords):
+            categories["analysis"].append(report)
+            classified = True
+        elif any(keyword in text_to_check for keyword in management_keywords):
+            categories["management"].append(report)
+            classified = True
+        elif any(keyword in text_to_check for keyword in governance_keywords):
+            categories["governance"].append(report)
+            classified = True
 
-    # Footer
-    md_lines.extend([
-        "## Report Information",
-        "",
-        f"- **Report Period:** {year} Q{quarter}",
-        f"- **Total Analysis Points:** {len(reports)}",
-        f"- **Generation Time:** {timestamp}",
-        "",
-        "*This report was automatically generated by OOMOL Financial Analysis Platform.*",
-        ""
-    ])
+        if not classified:
+            categories["other"].append(report)
 
-    return "\n".join(md_lines)
+    return categories
+
+
+
+
