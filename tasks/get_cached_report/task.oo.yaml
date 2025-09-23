@@ -24,6 +24,29 @@ outputs_def:
     description: "Cached financial report data"
     json_schema:
       type: object
+      properties:
+        data:
+          type: object
+          properties:
+            year:
+              type: integer
+            quarter:
+              type: integer
+            reports:
+              type: array
+              items:
+                type: object
+                properties:
+                  question:
+                    type: string
+                  answer:
+                    type: string
+          required:
+            - year
+            - quarter
+            - reports
+      required:
+        - data
 
   - handle: status
     description: "API call status"

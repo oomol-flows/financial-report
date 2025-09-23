@@ -1,26 +1,43 @@
 {
   "nodes": {
-    "get_cached_report#1": {
-      "rfNode": {
-        "position": {
-          "x": 0,
-          "y": 0
-        }
-      }
-    },
     "get_predefined_questions#1": {
       "rfNode": {
         "position": {
-          "x": 457.8174539631706,
-          "y": 32.60888710968775
+          "x": 610.7834297809753,
+          "y": -32
         }
       }
     },
     "get_cached_periods#1": {
       "rfNode": {
         "position": {
-          "x": 928.0352281825458,
-          "y": 32.60888710968775
+          "x": 1151.3149100920054,
+          "y": -604.9956274017102
+        }
+      }
+    },
+    "get_cached_report#1": {
+      "rfNode": {
+        "position": {
+          "x": 101.55513251213165,
+          "y": -37.01873285902991
+        }
+      }
+    },
+    "generate_md_report#1": {
+      "rfNode": {
+        "position": {
+          "x": 1713.4492841863864,
+          "y": -37.01873285902991
+        }
+      }
+    },
+    "markdown_text_preview#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": 2260.4422378438007,
+          "y": 264.6619720597014
         }
       }
     }

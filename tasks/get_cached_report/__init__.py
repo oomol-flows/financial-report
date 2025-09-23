@@ -1,5 +1,4 @@
 #region generated meta
-from datetime import datetime
 import typing
 class Inputs(typing.TypedDict):
     ticker: str

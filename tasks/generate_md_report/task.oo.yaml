@@ -1,0 +1,78 @@
+inputs_def:
+  - handle: report_data
+    description: "Structured financial report data with year, quarter and Q&A reports"
+    json_schema:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            year:
+              type: integer
+            quarter:
+              type: integer
+            reports:
+              type: array
+              items:
+                type: object
+                properties:
+                  question:
+                    type: string
+                  answer:
+                    type: string
+          required: [year, quarter, reports]
+      required: [data]
+    nullable: false
+
+  - handle: output_filename
+    description: "Output filename for the MD report (without extension)"
+    json_schema:
+      type: string
+    value: "financial_report"
+    nullable: false
+
+  - handle: company_name
+    description: "Company name for the report header"
+    json_schema:
+      type: string
+    value: ""
+    nullable: true
+
+  - handle: save_path
+    description: "Path to save the MD report file"
+    json_schema:
+      type: string
+      ui:widget: save
+      ui:options:
+        filters:
+          - name: Markdown Files
+            extensions:
+              - md
+        excludeAll: true
+    nullable: true
+
+outputs_def:
+  - handle: md_content
+    description: "Generated markdown content"
+    json_schema:
+      type: string
+
+  - handle: file_path
+    description: "Path where the MD file was saved"
+    json_schema:
+      type: string
+
+  - handle: status
+    description: "Generation status"
+    json_schema:
+      type: string
+
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+
+title: "Generate MD Report"
+icon: ":carbon:document-export:"
+description: "Convert structured financial report data into comprehensive markdown reports with professional formatting and Q&A sections"
