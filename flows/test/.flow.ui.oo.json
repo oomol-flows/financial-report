@@ -1,0 +1,36 @@
+{
+  "nodes": {
+    "get_cached_report#1": {
+      "rfNode": {
+        "position": {
+          "x": 188,
+          "y": 27
+        }
+      }
+    },
+    "generate_md_report#1": {
+      "rfNode": {
+        "position": {
+          "x": 832.5388734395357,
+          "y": 198.01958463996854
+        }
+      }
+    },
+    "md_to_pdf#1": {
+      "rfNode": {
+        "position": {
+          "x": 1364.6044532063013,
+          "y": 131.9804153600315
+        }
+      }
+    },
+    "get_cached_periods#1": {
+      "rfNode": {
+        "position": {
+          "x": 398.2691629668207,
+          "y": 461.0976940209995
+        }
+      }
+    }
+  }
+}

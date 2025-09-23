@@ -8,6 +8,9 @@ class Inputs(typing.TypedDict):
     title: str | None
     author: str | None
     css_style: str | None
+    generate_toc: bool
+    toc_title: str | None
+    style_theme: typing.Literal["default", "minimal", "professional"]
 class Outputs(typing.TypedDict):
     pdf_path: str
     status: str
@@ -18,7 +21,18 @@ import os
 import markdown
 from weasyprint import HTML, CSS
 
-def main(params: Inputs, context) -> Outputs:
+# Import styles module - handle both relative and absolute imports
+try:
+    from .styles import get_style_manager, get_theme_styles
+except ImportError:
+    # Fallback for direct execution
+    import sys
+    import os
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    sys.path.insert(0, current_dir)
+    from styles import get_style_manager, get_theme_styles
+
+def main(params: Inputs, _context) -> Outputs:
     """
     Convert Markdown content to PDF format
 
@@ -59,6 +73,14 @@ def main(params: Inputs, context) -> Outputs:
                 'css_class': 'highlight',
                 'use_pygments': True,
                 'noclasses': True,
+            },
+            'toc': {
+                'permalink': True,
+                'permalink_title': 'Link to this heading',
+                'baselevel': 1,
+                'toc_depth': 6,
+                'anchorlink': True,
+                'title': params.get('toc_title', 'Table of Contents')
             }
         }
 
@@ -69,106 +91,46 @@ def main(params: Inputs, context) -> Outputs:
         )
         html_content = md.convert(md_content)
 
-        # Default CSS styles
-        default_css = """
-        @page {
-            margin: 2cm;
-            @bottom-center {
-                content: counter(page);
-            }
-        }
+        # Generate table of contents if requested
+        toc_html = ""
+        if params.get('generate_toc', True):
+            if hasattr(md, 'toc') and md.toc:
+                toc_title = params.get('toc_title', 'Table of Contents')
+                toc_html = f"""
+                <div class="toc-container">
+                    <h1 class="toc-title">{toc_title}</h1>
+                    <div class="toc">
+                        {md.toc}
+                    </div>
+                </div>
+                <div class="page-break"></div>
+                """
 
-        body {
-            font-family: 'DejaVu Sans', Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: none;
-        }
+        # Generate CSS styles using the modular system
+        style_theme = params.get('style_theme', 'default')
 
-        h1, h2, h3, h4, h5, h6 {
-            color: #2c3e50;
-            margin-top: 2em;
-            margin-bottom: 0.5em;
-        }
+        # Get the appropriate styles based on theme
+        if style_theme == 'default':
+            style_manager = get_style_manager()
+            default_css = style_manager.get_combined_styles()
+        else:
+            theme_styles = get_theme_styles(style_theme)
+            if theme_styles:
+                style_manager = get_style_manager()
+                # Use theme styles with fallback to default for missing components
+                combined_styles = []
+                for component in ['base', 'toc', 'headings', 'content', 'code', 'tables']:
+                    if component in theme_styles:
+                        combined_styles.append(theme_styles[component])
+                    else:
+                        combined_styles.append(style_manager.get_style(component))
+                default_css = '\n'.join(combined_styles)
+            else:
+                # Fallback to default theme if theme not found
+                style_manager = get_style_manager()
+                default_css = style_manager.get_combined_styles()
 
-        h1 { font-size: 2.5em; border-bottom: 3px solid #3498db; padding-bottom: 0.3em; }
-        h2 { font-size: 2em; border-bottom: 2px solid #3498db; padding-bottom: 0.3em; }
-        h3 { font-size: 1.5em; }
-        h4 { font-size: 1.2em; }
-
-        p { margin: 1em 0; }
-
-        code {
-            background-color: #f8f9fa;
-            padding: 0.2em 0.4em;
-            border-radius: 3px;
-            font-family: 'DejaVu Sans Mono', 'Courier New', monospace;
-            font-size: 0.9em;
-        }
-
-        pre {
-            background-color: #f8f9fa;
-            padding: 1em;
-            border-radius: 5px;
-            overflow-x: auto;
-            border-left: 4px solid #3498db;
-        }
-
-        pre code {
-            background-color: transparent;
-            padding: 0;
-        }
-
-        blockquote {
-            border-left: 4px solid #bdc3c7;
-            margin: 1em 0;
-            padding: 0 1em;
-            color: #7f8c8d;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin: 1em 0;
-        }
-
-        th, td {
-            border: 1px solid #bdc3c7;
-            padding: 0.5em;
-            text-align: left;
-        }
-
-        th {
-            background-color: #ecf0f1;
-            font-weight: bold;
-        }
-
-        ul, ol {
-            margin: 1em 0;
-            padding-left: 2em;
-        }
-
-        li {
-            margin: 0.5em 0;
-        }
-
-        a {
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .highlight {
-            background-color: #f8f9fa;
-            padding: 0.1em;
-            border-radius: 3px;
-        }
-        """
-
-        # Combine default CSS with custom CSS
+        # Combine with custom CSS
         final_css = default_css
         if params.get("css_style"):
             final_css += "\n" + params["css_style"]
@@ -187,6 +149,7 @@ def main(params: Inputs, context) -> Outputs:
             <meta name="author" content="{author}">
         </head>
         <body>
+            {toc_html}
             {html_content}
         </body>
         </html>

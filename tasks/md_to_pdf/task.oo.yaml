@@ -63,6 +63,31 @@ inputs_def:
     value:
     nullable: true
 
+  - handle: generate_toc
+    description: "Generate a clickable table of contents"
+    json_schema:
+      type: boolean
+    value: true
+    nullable: false
+
+  - handle: toc_title
+    description: "Title for the table of contents section"
+    json_schema:
+      type: string
+    value: "Table of Contents"
+    nullable: true
+
+  - handle: style_theme
+    description: "Predefined style theme (default, minimal, professional)"
+    json_schema:
+      type: string
+      enum:
+        - "default"
+        - "minimal"
+        - "professional"
+    value: "default"
+    nullable: false
+
 outputs_def:
   - handle: pdf_path
     description: "Path where the PDF file was saved"
