@@ -47,7 +47,7 @@ nodes:
       - handle: css_style
         value: null
       - handle: generate_toc
-        value: true
+        value: false
       - handle: style_theme
         value: professional
       - handle: show_page_numbers

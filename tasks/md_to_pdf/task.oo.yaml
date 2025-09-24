@@ -25,7 +25,6 @@ inputs_def:
     description: "Output filename for the PDF (without extension)"
     json_schema:
       type: string
-    value: document
     nullable: false
 
   - handle: save_path
@@ -67,7 +66,7 @@ inputs_def:
     description: "Generate a clickable table of contents"
     json_schema:
       type: boolean
-    value: true
+    value: false
     nullable: false
 
   - handle: style_theme
