@@ -1,9 +1,13 @@
 title: Get Cached Ticker List
+description: "Retrieves cached ticker periods data and generates a formatted
+  markdown list of available stock tickers and their reporting periods"
 nodes:
   - node_id: get_periods#1
+    title: "Get Periods #1"
     task: self::get_cached_periods
 
   - node_id: generate_markdown#1
+    title: "Generate Markdown #1"
     task: self::generate_periods_markdown
     inputs_from:
       - handle: periods_list
