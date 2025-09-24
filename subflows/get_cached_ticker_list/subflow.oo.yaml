@@ -1,0 +1,25 @@
+title: Get Cached Ticker List
+nodes:
+  - node_id: get_periods#1
+    task: self::get_cached_periods
+
+  - node_id: generate_markdown#1
+    task: self::generate_periods_markdown
+    inputs_from:
+      - handle: periods_list
+        from_node:
+          - node_id: get_periods#1
+            output_handle: periods_list
+outputs_def:
+  - handle: markdown_output
+    json_schema:
+      type: string
+    nullable: false
+    description: Generated markdown content from periods list
+    executor_name: python
+outputs_from:
+  - handle: markdown_output
+    from_node:
+      - node_id: generate_markdown#1
+        output_handle: markdown_output
+icon: ":carbon:list:"

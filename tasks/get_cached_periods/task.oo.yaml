@@ -27,3 +27,4 @@ title: "Get Cached Periods"
 icon: ":carbon:calendar:"
 description: "Retrieve available cached financial report periods from the API.
   Shows which periods have pre-cached data available for faster access."
+private: true

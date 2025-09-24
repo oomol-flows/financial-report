@@ -1,0 +1,27 @@
+inputs_def:
+  - handle: periods_list
+    description: "List of cached report periods to convert to markdown"
+    json_schema:
+      type: object
+    nullable: false
+
+outputs_def:
+  - handle: markdown_output
+    description: "Generated markdown content from periods list"
+    json_schema:
+      type: string
+
+  - handle: periods_count
+    description: "Total number of periods processed"
+    json_schema:
+      type: number
+
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+
+title: "Generate Periods Markdown"
+icon: ":carbon:document-export:"
+description: "Convert periods list data into formatted markdown output for reports and documentation."

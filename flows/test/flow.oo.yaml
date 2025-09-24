@@ -4,3 +4,6 @@ nodes:
     inputs_from:
       []
     task: self::get_cached_periods
+  - node_id: periods_markdown_test#1
+    title: "Periods Markdown Test Flow #1"
+    subflow: self::get_cached_ticker_list
