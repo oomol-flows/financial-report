@@ -1,4 +1,4 @@
 {
   "financial-report": "Financial Report",
-  "a-comprehensive-oomol-workflow-system-for-financial-report-analy": "A comprehensive OOMOL workflow system for financial report analysis and data retrieval. This project provides automated tools for analyzing company financial data, generating custom reports, and accessing cached financial information through a structured API interface."
+  "a-comprehensive-oomol-workflow-system-for-financial-report-analy": "A tool for financial report analysis and data retrieval. This project provides automated tools to analyze company financial data, generate customized reports, and access cached financial information through a structured API interface. First, call get_cached_periods to check if there is a cache available, then prioritize generating PDFs."
 }

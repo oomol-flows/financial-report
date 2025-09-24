@@ -23,33 +23,38 @@ nodes:
           - node_id: get_cached_report#1
             output_handle: report_data
       - handle: output_filename
-        value: financial_report
+        value:
+        from_flow:
+          - input_handle: output_filename
       - handle: company_name
         value: null
+        from_flow:
+          - input_handle: company_name
       - handle: save_path
-        value: /oomol-driver/oomol-storage/md/uuussa.md
+        value:
+        from_flow:
+          - input_handle: save_path
     task: self::generate_md_report
 inputs_def:
   - handle: ticker
+    description: Required stock ticker symbol
     json_schema:
       type: string
     nullable: false
-    description: Required stock ticker symbol
-    value: 0697.HK
     executor_name: python
   - handle: year
+    description: Year for the report (optional)
     json_schema:
       type: integer
-    nullable: true
-    description: Year for the report (optional)
     value:
+    nullable: true
     executor_name: python
   - handle: quarter
+    description: Quarter for the report (optional)
     json_schema:
       type: integer
-    nullable: true
-    description: Quarter for the report (optional)
     value:
+    nullable: true
     executor_name: python
 outputs_def:
   - handle: file_path

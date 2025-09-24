@@ -1,4 +1,4 @@
-version: 0.0.3
+version: 0.0.4
 scripts:
   bootstrap: |
     npm install
@@ -7,8 +7,8 @@ scripts:
 icon: ./icon.png
 name: financial-report
 repository: https://github.com/oomol-flows/financial-report.git
-releaseNotes: "feat: use oomol-api key to call service"
 displayName: "%financial-report%"
 description: "%a-comprehensive-oomol-workflow-system-for-financial-report-analy%"
 dependencies:
   {}
+releaseNotes: update

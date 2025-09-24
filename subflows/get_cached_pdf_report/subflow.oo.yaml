@@ -23,11 +23,11 @@ nodes:
           - node_id: get_cached_report#1
             output_handle: report_data
       - handle: output_filename
-        value: financial_report
+        value:
       - handle: company_name
         value: null
       - handle: save_path
-        value: /oomol-driver/oomol-storage/md/uuussa.md
+        value:
     task: self::generate_md_report
   - node_id: md_to_pdf#1
     title: "Markdown to PDF Converter #1"
