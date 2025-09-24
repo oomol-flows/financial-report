@@ -70,13 +70,6 @@ inputs_def:
     value: true
     nullable: false
 
-  - handle: toc_title
-    description: "Title for the table of contents section"
-    json_schema:
-      type: string
-    value: "Table of Contents"
-    nullable: true
-
   - handle: style_theme
     description: "Predefined style theme (default, minimal, professional)"
     json_schema:

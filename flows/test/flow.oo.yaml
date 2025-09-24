@@ -34,7 +34,7 @@ nodes:
       - handle: md_file_path
         value: null
       - handle: output_filename
-        value: document2
+        value: document3
       - handle: save_path
         value: null
       - handle: title
@@ -44,9 +44,7 @@ nodes:
       - handle: css_style
         value: null
       - handle: generate_toc
-        value: true
-      - handle: toc_title
-        value: "Table of Contents"
+        value: false
       - handle: style_theme
         value: professional
       - handle: show_page_numbers

@@ -9,7 +9,6 @@ class Inputs(typing.TypedDict):
     author: str | None
     css_style: str | None
     generate_toc: bool
-    toc_title: str | None
     style_theme: typing.Literal["default", "minimal", "professional"]
     show_page_numbers: bool
     toc_style: typing.Literal["simple", "detailed"]
@@ -82,7 +81,7 @@ def main(params: Inputs, _context) -> Outputs:
                 'baselevel': 1,
                 'toc_depth': 6,
                 'anchorlink': True,
-                'title': params.get('toc_title', 'Table of Contents'),
+                'title': params.get('title', ""),
                 'slugify': lambda value, separator: value.lower().replace(' ', separator).replace('-', separator),
                 'separator': '-'
             }
@@ -99,7 +98,7 @@ def main(params: Inputs, _context) -> Outputs:
         toc_html = ""
         if params.get('generate_toc', True):
             if hasattr(md, 'toc') and md.toc:
-                toc_title = params.get('toc_title', 'Table of Contents')
+                toc_title = params.get('title', '')
                 toc_style = params.get('toc_style', 'detailed')
                 show_page_numbers = params.get('show_page_numbers', True)
 
@@ -150,7 +149,7 @@ def main(params: Inputs, _context) -> Outputs:
             final_css += "\n" + params["css_style"]
 
         # Create complete HTML document
-        title = params.get("title", "Document")
+        title = params.get("title", "")
         author = params.get("author", "")
 
         full_html = f"""
