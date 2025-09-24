@@ -33,8 +33,6 @@ nodes:
             output_handle: md_content
       - handle: md_file_path
         value: null
-      - handle: output_filename
-        value: document3
       - handle: save_path
         value: null
       - handle: title
@@ -63,3 +61,28 @@ nodes:
           - node_id: generate_md_report#1
             output_handle: file_path
     task: oomol-preview::markdown_file_preview
+  - node_id: md_to_pdf#2
+    title: "Markdown to PDF Converter #2"
+    inputs_from:
+      - handle: md_content
+        value: null
+      - handle: md_file_path
+        value: null
+      - handle: output_filename
+      - handle: save_path
+        value: null
+      - handle: title
+        value: null
+      - handle: author
+        value: null
+      - handle: css_style
+        value: null
+      - handle: generate_toc
+        value: false
+      - handle: style_theme
+        value: default
+      - handle: show_page_numbers
+        value: true
+      - handle: toc_style
+        value: detailed
+    task: self::md_to_pdf

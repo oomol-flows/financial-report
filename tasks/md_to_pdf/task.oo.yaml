@@ -21,12 +21,6 @@ inputs_def:
     value:
     nullable: true
 
-  - handle: output_filename
-    description: "Output filename for the PDF (without extension)"
-    json_schema:
-      type: string
-    nullable: false
-
   - handle: save_path
     description: "Path to save the PDF file"
     json_schema:
@@ -74,9 +68,9 @@ inputs_def:
     json_schema:
       type: string
       enum:
-        - "default"
-        - "minimal"
-        - "professional"
+        - default
+        - minimal
+        - professional
     value: default
     nullable: false
 
@@ -92,8 +86,8 @@ inputs_def:
     json_schema:
       type: string
       enum:
-        - "simple"
-        - "detailed"
+        - simple
+        - detailed
     value: detailed
     nullable: false
 

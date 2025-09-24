@@ -3,7 +3,6 @@ import typing
 class Inputs(typing.TypedDict):
     md_content: str | None
     md_file_path: str | None
-    output_filename: str
     save_path: str | None
     title: str | None
     author: str | None
@@ -168,8 +167,15 @@ def main(params: Inputs, _context) -> Outputs:
         </html>
         """
 
-        # Determine output path
-        output_filename = params.get("output_filename", "document")
+        # Determine output path using title
+        title_for_filename = params.get("title", "document").strip()
+        if not title_for_filename:
+            title_for_filename = "document"
+
+        # Sanitize title for filename (remove invalid filesystem characters)
+        import re
+        output_filename = re.sub(r'[<>:"/\\|?*]', '_', title_for_filename)
+        output_filename = output_filename.replace(' ', '_')
         if not output_filename.endswith('.pdf'):
             output_filename += '.pdf'
 
