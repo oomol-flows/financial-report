@@ -9,6 +9,7 @@ class Outputs(typing.TypedDict):
     md_content: str
     file_path: str
     status: str
+    title: str
 #endregion
 
 from oocana import Context
@@ -35,7 +36,7 @@ def main(params: Inputs, context: Context) -> Outputs:
         reports = data["reports"]
 
         # Generate report content
-        md_content = generate_md_report(data, params.get("company_name"))
+        md_content, title = generate_md_report(data, params.get("company_name"))
 
         # Determine save path
         if params.get("save_path"):
@@ -59,13 +60,14 @@ def main(params: Inputs, context: Context) -> Outputs:
         return {
             "md_content": md_content,
             "file_path": file_path,
-            "status": f"Successfully generated MD report with {len(reports)} Q&A items"
+            "status": f"Successfully generated MD report with {len(reports)} Q&A items",
+            "title": title
         }
 
     except Exception as e:
         raise ValueError(f"Failed to generate MD report: {str(e)}")
 
-def generate_md_report(data: dict, company_name: str = None) -> str:
+def generate_md_report(data: dict, company_name: str = None) -> tuple[str, str]:
     """Generate structured and standardized markdown report"""
 
     year = data["year"]
@@ -79,15 +81,15 @@ def generate_md_report(data: dict, company_name: str = None) -> str:
 
     # Document title
     if company_name:
-        md_lines.append(f"# {company_name} 财务分析报告 ({year}Q{quarter})")
+        title = f"{company_name} 财务分析报告 ({year}Q{quarter})"
+        md_lines.append(f"# {title}")
     else:
-        md_lines.append(f"# 财务分析报告 ({year}Q{quarter})")
+        title = f"财务分析报告 ({year}Q{quarter})"
+        md_lines.append(f"# {title}")
 
     md_lines.extend(["", "---", ""])
 
-    # Generate and add table of contents
-    toc_content = generate_table_of_contents(classified_content)
-    md_lines.append(toc_content)
+    # Table of contents generation removed - no longer generates TOC
 
     # First, add financial content directly under main title (no section header)
     section_number = 1
@@ -154,7 +156,7 @@ def generate_md_report(data: dict, company_name: str = None) -> str:
         ""
     ])
 
-    return "\n".join(md_lines)
+    return "\n".join(md_lines), title
 
 
 def generate_table_of_contents(classified_content: dict) -> str:

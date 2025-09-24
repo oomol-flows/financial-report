@@ -78,7 +78,7 @@ inputs_def:
         - "default"
         - "minimal"
         - "professional"
-    value: "default"
+    value: default
     nullable: false
 
   - handle: show_page_numbers
@@ -95,7 +95,7 @@ inputs_def:
       enum:
         - "simple"
         - "detailed"
-    value: "detailed"
+    value: detailed
     nullable: false
 
 outputs_def:

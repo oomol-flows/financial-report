@@ -39,12 +39,15 @@ nodes:
         value: null
       - handle: title
         value: null
+        from_node:
+          - node_id: generate_md_report#1
+            output_handle: title
       - handle: author
         value: null
       - handle: css_style
         value: null
       - handle: generate_toc
-        value: false
+        value: true
       - handle: style_theme
         value: professional
       - handle: show_page_numbers
@@ -52,11 +55,6 @@ nodes:
       - handle: toc_style
         value: detailed
     task: self::md_to_pdf
-  - node_id: get_cached_periods#1
-    title: "Get Cached Periods #1"
-    inputs_from:
-      []
-    task: self::get_cached_periods
   - node_id: markdown_file_preview#1
     title: "Markdown file preview #1"
     inputs_from:

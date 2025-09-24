@@ -72,6 +72,11 @@ outputs_def:
     json_schema:
       type: string
 
+  - handle: title
+    description: "Document title"
+    json_schema:
+      type: string
+
 executor:
   name: python
   options:
