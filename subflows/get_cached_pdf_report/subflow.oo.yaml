@@ -1,0 +1,119 @@
+nodes:
+  - node_id: get_cached_report#1
+    title: "Get Cached Report #1"
+    inputs_from:
+      - handle: ticker
+        value: 0697.HK
+        from_flow:
+          - input_handle: ticker
+      - handle: year
+        value: null
+        from_flow:
+          - input_handle: year
+      - handle: quarter
+        value: null
+        from_flow:
+          - input_handle: quarter
+    task: self::get_cached_report
+  - node_id: generate_md_report#1
+    title: "Generate MD Report #1"
+    inputs_from:
+      - handle: report_data
+        from_node:
+          - node_id: get_cached_report#1
+            output_handle: report_data
+      - handle: output_filename
+        value: financial_report
+      - handle: company_name
+        value: null
+      - handle: save_path
+        value: /oomol-driver/oomol-storage/md/uuussa.md
+    task: self::generate_md_report
+  - node_id: md_to_pdf#1
+    title: "Markdown to PDF Converter #1"
+    inputs_from:
+      - handle: md_content
+        value: null
+        from_node:
+          - node_id: generate_md_report#1
+            output_handle: md_content
+      - handle: md_file_path
+        value: null
+      - handle: save_path
+        value: null
+      - handle: title
+        value: null
+        from_node:
+          - node_id: generate_md_report#1
+            output_handle: title
+      - handle: author
+        value: null
+      - handle: css_style
+        value: null
+      - handle: generate_toc
+        value: false
+      - handle: style_theme
+        value: professional
+      - handle: show_page_numbers
+        value: true
+      - handle: toc_style
+        value: detailed
+    task: self::md_to_pdf
+inputs_def:
+  - handle: ticker
+    description: Required stock ticker symbol
+    json_schema:
+      type: string
+    nullable: false
+    executor_name: python
+  - handle: year
+    description: Year for the report (optional)
+    json_schema:
+      type: integer
+    value:
+    nullable: true
+    executor_name: python
+  - handle: quarter
+    description: Quarter for the report (optional)
+    json_schema:
+      type: integer
+    value:
+    nullable: true
+    executor_name: python
+outputs_def:
+  - handle: pdf_path
+    json_schema:
+      type: string
+    nullable: false
+    description: Path where the PDF file was saved
+    executor_name: python
+  - handle: status
+    json_schema:
+      type: string
+    nullable: false
+    description: Conversion status message
+    executor_name: python
+  - handle: file_size
+    json_schema:
+      type: number
+    nullable: false
+    description: Size of the generated PDF file in bytes
+    executor_name: python
+outputs_from:
+  - handle: pdf_path
+    from_node:
+      - node_id: md_to_pdf#1
+        output_handle: pdf_path
+  - handle: file_size
+    from_node:
+      - node_id: md_to_pdf#1
+        output_handle: file_size
+  - handle: status
+    from_node:
+      - node_id: md_to_pdf#1
+        output_handle: status
+title: Get Cached PDF Report
+icon: ":carbon:document-pdf:"
+description: "Retrieves cached financial report data, generates a markdown
+  document, and converts it to PDF format for the specified stock ticker and
+  time period"

@@ -27,3 +27,4 @@ title: "Get Predefined Questions"
 icon: ":carbon:help:"
 description: "Retrieve predefined financial analysis questions from the API.
   These questions can be used for generating customized financial reports."
+private: true

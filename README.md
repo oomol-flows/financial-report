@@ -1,141 +1,218 @@
 # Financial Report Analysis System
 
-A comprehensive OOMOL workflow system for financial report analysis and data retrieval. This project provides automated tools for analyzing company financial data, generating custom reports, and accessing cached financial information through a structured API interface.
+A comprehensive OOMOL workflow system for financial report analysis and document generation. This project provides automated tools for analyzing company financial data, generating custom reports in multiple formats, and accessing financial information through an intelligent API interface.
 
-## 1. 🎯 Project Purpose
+## 1. 🎯 What This System Does
 
-This system enables users to:
-- **Analyze Company Financials**: Retrieve and analyze financial data for publicly traded companies
-- **Generate Custom Reports**: Create tailored financial analysis summaries based on specific questions and criteria
-- **Access Cached Data**: Efficiently retrieve pre-processed financial reports and periods
-- **Automate Workflows**: Build automated financial analysis pipelines using OOMOL's visual workflow system
+This system helps you create professional financial analysis reports without technical expertise:
 
-## 2. 📊 Available Blocks (Tasks)
+- **📊 Analyze Company Financials**: Get detailed financial insights for any publicly traded company
+- **📝 Generate Professional Reports**: Create comprehensive markdown and PDF reports with Q&A sections
+- **⚡ Access Pre-processed Data**: Quickly retrieve cached financial information for faster analysis
+- **🔄 Automate Report Generation**: Build complete report generation workflows using visual drag-and-drop interface
 
-### 2.1 Get Cached Report
-**Purpose**: Retrieve cached financial report data from the API  
-**Icon**: 📊 `:carbon:report:`
+## 2. 🧩 Available Building Blocks
 
-**Inputs**:
-- `api_key` (secret): Financial Report Analysis API Key
-- `ticker` (string): Required stock ticker symbol (e.g., "AAPL", "MSFT")
-- `year` (integer, optional): Specific year for the report
-- `quarter` (integer, optional): Specific quarter for the report
+### 2.1 Get Cached Periods *(Public Block)*
+**What it does**: Shows you which time periods have financial data available
+**Icon**: 📅 Calendar
 
-**Outputs**:
-- `report_data`: Cached financial report data object
-- `status`: API call status
-- `message`: Status message or error details
+**You need**:
+- Your Financial API key
 
-**Use Case**: Quickly access pre-processed financial data for a specific company and time period.
+**You get**:
+- List of available report periods (years and quarters)
+- Success/error status
+- Detailed status messages
+
+**When to use**: Check what data is available before requesting specific company reports.
 
 ---
 
-### 2.2 Get Cached Periods
-**Purpose**: Retrieve available cached financial report periods  
-**Icon**: 📅 `:carbon:calendar:`
+### 2.2 Get Cached Report *(Internal Block)*
+**What it does**: Retrieves pre-processed financial data for a specific company
+**Icon**: 📊 Report Chart
 
-**Inputs**:
-- `api_key` (secret): Financial Report Analysis API Key
+**You need**:
+- Stock ticker symbol (like "AAPL" for Apple, "MSFT" for Microsoft)
+- Year (optional)
+- Quarter (optional)
 
-**Outputs**:
-- `periods_list`: List of available cached report periods
-- `status`: API call status  
-- `message`: Status message or error details
+**You get**:
+- Complete financial report data with questions and answers
+- Processing status
+- Error details if something goes wrong
 
-**Use Case**: Check which time periods have cached data available before requesting specific reports.
-
----
-
-### 2.3 Get Predefined Questions
-**Purpose**: Retrieve predefined financial analysis questions  
-**Icon**: ❓ `:carbon:help:`
-
-**Inputs**:
-- `api_key` (secret): Financial Report Analysis API Key
-
-**Outputs**:
-- `questions_list`: List of predefined analysis questions
-- `status`: API call status
-- `message`: Status message or error details
-
-**Use Case**: Discover available analysis questions that can be used for generating customized financial reports.
+**When to use**: Get the raw financial data that will be used to create your reports.
 
 ---
 
-### 2.4 Generate Report Summary
-**Purpose**: Generate customized financial analysis summaries  
-**Icon**: 📋 `:carbon:document-tasks:`
+### 2.3 Get Predefined Questions *(Internal Block)*
+**What it does**: Shows you what financial analysis questions are available
+**Icon**: ❓ Help
 
-**Inputs**:
-- `api_key` (secret): Financial Report Analysis API Key
-- `ticker` (string): Company stock ticker symbol
-- `years` (integer): Number of years for analysis (default: 1)
-- `question_group` (string): Question group type (e.g., "brief", "detailed")
-- `question_ids` (array): Array of specific question IDs
-- `batch` (boolean): Whether to process in batch mode (default: false)
-- `use_cache` (boolean): Whether to use cached results (default: true)
+**You need**:
+- Nothing - just run it!
 
-**Outputs**:
-- `summary_result`: Generated financial analysis summary object
-- `status`: API call status
-- `message`: Status message or error details
+**You get**:
+- Complete list of financial analysis questions
+- Question categories and types
+- Status information
 
-**Use Case**: Create comprehensive financial analysis reports based on specific criteria and questions.
-
-## 3. 🔧 Setup and Installation
-
-1. **Install Dependencies**:
-   ```bash
-   npm install
-   poetry install --no-root
-   ```
-
-2. **Configure API Keys**:
-   - Set up your Financial Report Analysis API key in OOMOL secrets
-   - Use the secret key: `${{OO_SECRET:FinancialAPI,Financial Report API,API_KEY}}`
-
-3. **Run Bootstrap**:
-   ```bash
-   oomol run bootstrap
-   ```
-
-## 4. 🚀 Usage Examples
-
-### 4.1 Basic Financial Analysis Workflow
-
-1. **Check Available Periods**: Use `Get Cached Periods` to see what data is available
-2. **Get Report Data**: Use `Get Cached Report` with a specific ticker symbol
-3. **Explore Questions**: Use `Get Predefined Questions` to see analysis options
-4. **Generate Summary**: Use `Generate Report Summary` to create a custom analysis
-
-### 4.2 Sample Company Analysis
-- Input ticker: `RBLX` (Roblox Corporation)
-- Retrieve cached data for recent periods
-- Generate analysis summary with predefined questions
-- Output comprehensive financial insights
-
-## 5. 🔒 Security Features
-
-- **API Key Management**: Secure storage of API credentials using OOMOL's secret management
-- **Error Handling**: Comprehensive error handling with retry logic for network requests
-- **Timeout Protection**: Built-in timeout mechanisms to prevent hanging requests
-
-## 6. 🏗️ Architecture
-
-- **OOMOL Framework**: Built on OOMOL's visual workflow system
-- **Python Backend**: Core logic implemented in Python with robust error handling
-- **API Integration**: RESTful API integration with retry mechanisms
-- **Caching System**: Efficient data caching for improved performance
-
-## 7. 📈 Workflow Capabilities
-
-This system supports building complex financial analysis workflows by chaining blocks together:
-- Sequential data retrieval and analysis
-- Conditional processing based on data availability
-- Batch processing for multiple companies
-- Custom report generation with flexible question sets
+**When to use**: Discover what kinds of financial insights you can generate in your reports.
 
 ---
 
-*Built with OOMOL - The Visual Workflow Platform*
+### 2.4 Generate Report Summary *(Internal Block)*
+**What it does**: Creates custom financial analysis based on your criteria
+**Icon**: 📋 Document Tasks
+
+**You need**:
+- Company stock ticker symbol
+- Number of years to analyze (default: 1 year)
+- Question group type ("brief" or "detailed")
+- Specific questions you want answered
+- Processing preferences (batch mode, use cache)
+
+**You get**:
+- Comprehensive financial analysis summary
+- Custom insights based on your selected questions
+- Processing status and error handling
+
+**When to use**: Generate the actual financial analysis content for your reports.
+
+---
+
+### 2.5 Generate Markdown Report *(Internal Block)*
+**What it does**: Converts financial data into professional markdown documents
+**Icon**: 📄 Document Export
+
+**You need**:
+- Structured financial report data (from other blocks)
+- Company name (optional)
+- Output filename (optional)
+- Save location for the markdown file
+
+**You get**:
+- Professional markdown content with headers, sections, and Q&A
+- File path where the document was saved
+- Document title for further processing
+- Generation status
+
+**When to use**: Convert raw financial analysis into readable, formatted documents.
+
+---
+
+### 2.6 Markdown to PDF Converter *(Internal Block)*
+**What it does**: Transforms markdown documents into professional PDF reports
+**Icon**: 📄 PDF Document
+
+**You need**:
+- Markdown content OR path to markdown file
+- PDF save location
+- Document title and author (optional)
+- Styling preferences (default, minimal, or professional theme)
+- Table of contents options
+
+**You get**:
+- Professional PDF report with custom styling
+- File size information
+- Conversion status
+- Clickable table of contents (optional)
+
+**When to use**: Create final, professional PDF reports ready for sharing or presentation.
+
+## 3. 🚀 Common Use Cases
+
+### 3.1 Complete Financial Report Generation
+**Perfect for**: Business analysts, investors, researchers
+
+**Typical workflow**:
+1. **Check Data Availability**: Use `Get Cached Periods` to see what's available
+2. **Explore Questions**: Run `Get Predefined Questions` to see analysis options
+3. **Generate Analysis**: Use `Generate Report Summary` with your chosen company ticker
+4. **Create Document**: Use `Generate Markdown Report` to format the analysis
+5. **Make PDF**: Use `Markdown to PDF Converter` for professional presentation
+
+**Example**: Analyze Apple's performance over the last year
+- Input: `AAPL` ticker, 1 year analysis, "detailed" questions
+- Output: Professional PDF report with comprehensive financial insights
+
+### 3.2 Quick Data Lookup
+**Perfect for**: Quick research, data verification
+
+**Simple workflow**:
+1. **Get Data**: Use `Get Cached Report` with company ticker
+2. **Review**: Access structured financial information immediately
+
+**Example**: Check Tesla's latest quarterly results
+- Input: `TSLA` ticker, specific year and quarter
+- Output: Raw financial data and Q&A responses
+
+### 3.3 Batch Company Comparison
+**Perfect for**: Investment research, market analysis
+
+**Advanced workflow**:
+1. **Set Questions**: Use `Get Predefined Questions` to choose analysis criteria
+2. **Generate Multiple**: Run `Generate Report Summary` for each company
+3. **Format Reports**: Create standardized documents for comparison
+4. **Compile PDFs**: Generate professional reports for each company
+
+## 4. 🛠️ Getting Started
+
+### 4.1 For OOMOL Platform Users
+1. **Import This Package**: Add the financial-report package to your OOMOL workspace
+2. **Set Up API Key**: Configure your Financial API credentials in OOMOL's secret manager
+3. **Build Your Workflow**: Drag and drop blocks to create your analysis pipeline
+4. **Run and Export**: Generate reports and export them as needed
+
+### 4.2 API Key Setup
+- **Required**: Financial Report Analysis API key
+- **Storage**: Use OOMOL's secure secret management
+- **Format**: `${{OO_SECRET:FinancialAPI,Financial Report API,API_KEY}}`
+
+### 4.3 Supported Companies
+- Any publicly traded company with a standard ticker symbol
+- Examples: AAPL (Apple), MSFT (Microsoft), GOOGL (Google), TSLA (Tesla)
+- Historical data availability varies by company and time period
+
+## 5. 📋 Report Output Features
+
+### 5.1 Markdown Reports
+- **Professional formatting** with headers, sections, and Q&A layouts
+- **Structured content** perfect for documentation or further processing
+- **Customizable** company names and filenames
+- **Easy to edit** and modify after generation
+
+### 5.2 PDF Reports
+- **Three styling themes**: Default, Minimal, and Professional
+- **Customizable metadata**: Title, author, and document properties
+- **Optional table of contents** with clickable navigation
+- **Page numbering** and professional layout
+- **Ready for sharing** with stakeholders or clients
+
+## 6. 🔒 Built-in Safety Features
+
+- **Secure API handling**: Encrypted credential storage and secure API communications
+- **Error recovery**: Automatic retry mechanisms for network issues
+- **Data validation**: Input validation and error checking throughout the workflow
+- **Timeout protection**: Prevents hanging processes and ensures reliable operation
+
+## 7. 🎯 Who Should Use This
+
+### 7.1 Perfect For
+- **Business Analysts**: Creating regular company analysis reports
+- **Investment Researchers**: Generating standardized investment research
+- **Financial Advisors**: Preparing client reports and market analysis
+- **Students/Academics**: Research projects requiring financial data analysis
+- **Consultants**: Professional reports for clients and presentations
+
+### 7.2 No Technical Skills Required
+- **Visual workflow builder**: Drag-and-drop interface, no coding needed
+- **Pre-configured blocks**: All complex logic handled automatically
+- **Error-friendly**: Clear error messages and status updates
+- **Documentation included**: Each block explains what it does and when to use it
+
+---
+
+*Built with OOMOL - The Visual Workflow Platform for Everyone*

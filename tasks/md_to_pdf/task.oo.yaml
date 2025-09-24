@@ -117,3 +117,4 @@ title: "Markdown to PDF Converter"
 icon: ":carbon:document-pdf:"
 description: "Convert Markdown content or files to PDF format with customizable
   styling and metadata support"
+private: true

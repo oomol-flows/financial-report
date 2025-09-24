@@ -2,7 +2,7 @@
 import typing
 class Inputs(typing.TypedDict):
     report_data: dict
-    output_filename: str
+    output_filename: str | None
     company_name: str | None
     save_path: str | None
 class Outputs(typing.TypedDict):
@@ -45,7 +45,22 @@ def main(params: Inputs, context: Context) -> Outputs:
             # Default to oomol-storage directory
             storage_dir = "/oomol-driver/oomol-storage"
             os.makedirs(storage_dir, exist_ok=True)
-            filename = f"{params['output_filename']}_{year}Q{quarter}.md"
+
+            # Generate filename - handle nullable output_filename
+            output_filename = params.get('output_filename')
+            if not output_filename:
+                # Generate filename from title or use default
+                company_name = params.get('company_name', '')
+                if company_name:
+                    # Sanitize company name for filename
+                    import re
+                    sanitized_name = re.sub(r'[<>:"/\\|?*]', '_', company_name)
+                    sanitized_name = sanitized_name.replace(' ', '_')
+                    output_filename = f"{sanitized_name}_financial_report"
+                else:
+                    output_filename = "financial_report"
+
+            filename = f"{output_filename}_{year}Q{quarter}.md"
             file_path = os.path.join(storage_dir, filename)
 
         # Ensure directory exists

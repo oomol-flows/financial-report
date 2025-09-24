@@ -3,34 +3,34 @@
     "get_cached_report#1": {
       "rfNode": {
         "position": {
-          "x": 0,
-          "y": 307.25
+          "x": 486,
+          "y": 27
         }
       }
     },
     "generate_md_report#1": {
       "rfNode": {
         "position": {
-          "x": 486,
-          "y": 280.25
-        }
-      }
-    },
-    "md_to_pdf#1": {
-      "contentWidth": 591.9692645904547,
-      "rfNode": {
-        "position": {
-          "x": 1016.5,
+          "x": 972,
           "y": 0
         }
       }
-    },
-    "markdown_file_preview#1": {
-      "contentWidth": 681.2545589799852,
+    }
+  },
+  "pseudoNodes": {
+    "input": {
       "rfNode": {
         "position": {
-          "x": 972,
-          "y": 608
+          "x": 0,
+          "y": 112.5
+        }
+      }
+    },
+    "output": {
+      "rfNode": {
+        "position": {
+          "x": 1458,
+          "y": 126
         }
       }
     }

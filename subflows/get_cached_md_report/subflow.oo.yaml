@@ -1,0 +1,78 @@
+nodes:
+  - node_id: get_cached_report#1
+    title: "Get Cached Report #1"
+    inputs_from:
+      - handle: ticker
+        value: 0697.HK
+        from_flow:
+          - input_handle: ticker
+      - handle: year
+        value: null
+        from_flow:
+          - input_handle: year
+      - handle: quarter
+        value: null
+        from_flow:
+          - input_handle: quarter
+    task: self::get_cached_report
+  - node_id: generate_md_report#1
+    title: "Generate MD Report #1"
+    inputs_from:
+      - handle: report_data
+        from_node:
+          - node_id: get_cached_report#1
+            output_handle: report_data
+      - handle: output_filename
+        value: financial_report
+      - handle: company_name
+        value: null
+      - handle: save_path
+        value: /oomol-driver/oomol-storage/md/uuussa.md
+    task: self::generate_md_report
+inputs_def:
+  - handle: ticker
+    json_schema:
+      type: string
+    nullable: false
+    description: Required stock ticker symbol
+    value: 0697.HK
+    executor_name: python
+  - handle: year
+    json_schema:
+      type: integer
+    nullable: true
+    description: Year for the report (optional)
+    value:
+    executor_name: python
+  - handle: quarter
+    json_schema:
+      type: integer
+    nullable: true
+    description: Quarter for the report (optional)
+    value:
+    executor_name: python
+outputs_def:
+  - handle: file_path
+    json_schema:
+      type: string
+    nullable: false
+    description: Path where the MD file was saved
+    executor_name: python
+  - handle: status
+    json_schema:
+      type: string
+    nullable: false
+    description: Generation status
+    executor_name: python
+outputs_from:
+  - handle: file_path
+    from_node:
+      - node_id: generate_md_report#1
+        output_handle: file_path
+  - handle: status
+    from_node:
+      []
+title: Get Cached MD Report
+icon: ":simple-icons:markdown:"
+description: "Retrieves cached financial report data and generates a markdown
+  document for the specified stock ticker and time period"

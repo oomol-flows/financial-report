@@ -68,3 +68,4 @@ title: "Get Cached Report"
 icon: ":carbon:report:"
 description: "Retrieve cached financial report data from the API. Can be
   filtered by company symbol and/or report period for specific data retrieval."
+private: true

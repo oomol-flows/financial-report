@@ -11,4 +11,4 @@ releaseNotes: "feat: use oomol-api key to call service"
 displayName: "%financial-report%"
 description: "%a-comprehensive-oomol-workflow-system-for-financial-report-analy%"
 dependencies:
-  oomol-preview: 0.1.7
+  {}

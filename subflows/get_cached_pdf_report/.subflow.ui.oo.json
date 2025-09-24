@@ -1,0 +1,47 @@
+{
+  "nodes": {
+    "get_cached_report#1": {
+      "rfNode": {
+        "position": {
+          "x": 0,
+          "y": 94.5
+        }
+      }
+    },
+    "generate_md_report#1": {
+      "rfNode": {
+        "position": {
+          "x": 486,
+          "y": 67.5
+        }
+      }
+    },
+    "md_to_pdf#1": {
+      "contentWidth": 591.9692645904547,
+      "rfNode": {
+        "position": {
+          "x": 972,
+          "y": 0
+        }
+      }
+    }
+  },
+  "pseudoNodes": {
+    "input": {
+      "rfNode": {
+        "position": {
+          "x": -526.5732484076433,
+          "y": 30.44267515923559
+        }
+      }
+    },
+    "output": {
+      "rfNode": {
+        "position": {
+          "x": 1660.1500796178345,
+          "y": 274.4872611464968
+        }
+      }
+    }
+  }
+}

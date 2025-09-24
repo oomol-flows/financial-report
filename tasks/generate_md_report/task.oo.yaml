@@ -32,8 +32,8 @@ inputs_def:
     description: "Output filename for the MD report (without extension)"
     json_schema:
       type: string
-    value: financial_report
-    nullable: false
+    value:
+    nullable: true
 
   - handle: company_name
     description: "Company name for the report header"
@@ -87,3 +87,4 @@ title: "Generate MD Report"
 icon: ":carbon:document-export:"
 description: "Convert structured financial report data into comprehensive
   markdown reports with professional formatting and Q&A sections"
+private: true
