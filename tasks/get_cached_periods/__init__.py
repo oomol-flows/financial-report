@@ -2,9 +2,9 @@
 import typing
 Inputs = typing.Dict[str, typing.Any]
 class Outputs(typing.TypedDict):
-    periods_list: dict
-    status: str
-    message: str
+    periods_list: typing.NotRequired[dict]
+    status: typing.NotRequired[str]
+    message: typing.NotRequired[str]
 #endregion
 
 from oocana import Context, context
@@ -27,13 +27,13 @@ def _make_request_with_retry(url: str, headers: dict, max_retries: int = 3) -> r
     raise Exception("Failed to fetch data after multiple attempts")
 
 
-def main(params: Inputs, _context: Context) -> Outputs:
-    base_url = "https://console.oomol.com"
+async def main(params: Inputs, _context: Context) -> Outputs:
+    base_url = "https://llm.oomol.com"
     
     try:
         # Prepare headers with API key
         headers = {
-            "Authorization": _context.oomol_llm_env.get("api_key"),
+            "Authorization": await _context.oomol_token(),
             "Content-Type": "application/json"
         }
 

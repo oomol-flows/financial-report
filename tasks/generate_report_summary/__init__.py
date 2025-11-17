@@ -9,9 +9,9 @@ class Inputs(typing.TypedDict):
     batch: bool
     use_cache: bool
 class Outputs(typing.TypedDict):
-    summary_result: dict
-    status: str
-    message: str
+    summary_result: typing.NotRequired[dict]
+    status: typing.NotRequired[str]
+    message: typing.NotRequired[str]
 #endregion
 
 from oocana import Context

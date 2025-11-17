@@ -2,9 +2,9 @@
 import typing
 Inputs = typing.Dict[str, typing.Any]
 class Outputs(typing.TypedDict):
-    questions_list: dict
-    status: str
-    message: str
+    questions_list: typing.NotRequired[dict]
+    status: typing.NotRequired[str]
+    message: typing.NotRequired[str]
 #endregion
 
 from oocana import Context
@@ -26,7 +26,7 @@ def _make_request_with_retry(url: str, headers: dict, max_retries: int = 3) -> r
             raise e
     raise Exception("Failed to get predefined questions after multiple attempts")
 
-def main(params: Inputs, _context: Context) -> Outputs:
+async def main(params: Inputs, _context: Context) -> Outputs:
     """
     Get Predefined Questions - Retrieve predefined analysis questions from API
     
@@ -38,11 +38,11 @@ def main(params: Inputs, _context: Context) -> Outputs:
         List of predefined questions, status, and messages
     """
     
-    base_url = "https://console.oomol.com"
+    base_url = "https://llm.oomol.com"
     
     # Prepare headers with API key
     headers = {
-        "Authorization": _context.oomol_llm_env.get('api_key'),
+        "Authorization": await _context.oomol_token(),
         "Content-Type": "application/json"
     }
     

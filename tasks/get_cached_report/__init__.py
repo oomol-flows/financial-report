@@ -5,9 +5,9 @@ class Inputs(typing.TypedDict):
     year: int | None
     quarter: int | None
 class Outputs(typing.TypedDict):
-    report_data: dict
-    status: str
-    message: str
+    report_data: typing.NotRequired[dict]
+    status: typing.NotRequired[str]
+    message: typing.NotRequired[str]
 #endregion
 
 from oocana import Context
@@ -31,7 +31,7 @@ def _make_request_with_retry(url: str, headers: dict, params: dict = None, max_r
     raise Exception("Failed to get cached report after multiple attempts")
 
 
-def main(params: Inputs, _context: Context) -> Outputs:
+async def main(params: Inputs, _context: Context) -> Outputs:
     """
     Get Cached Report - Retrieve cached financial report data from API
     
@@ -43,12 +43,12 @@ def main(params: Inputs, _context: Context) -> Outputs:
         Cached report data, status, and messages
     """
     
-    base_url = "https://console.oomol.com"
+    base_url = "https://llm.oomol.com"
     ticker = params["ticker"]
     
     # Prepare headers with API key
     headers = {
-        "Authorization": _context.oomol_llm_env.get('api_key'),
+        "Authorization": await _context.oomol_token(),
         "Content-Type": "application/json"
     }
     

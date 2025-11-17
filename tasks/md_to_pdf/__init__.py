@@ -12,9 +12,9 @@ class Inputs(typing.TypedDict):
     show_page_numbers: bool
     toc_style: typing.Literal["simple", "detailed"]
 class Outputs(typing.TypedDict):
-    pdf_path: str
-    status: str
-    file_size: float
+    pdf_path: typing.NotRequired[str]
+    status: typing.NotRequired[str]
+    file_size: typing.NotRequired[float]
 #endregion
 
 import os

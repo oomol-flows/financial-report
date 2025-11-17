@@ -2,10 +2,9 @@
 import typing
 class Inputs(typing.TypedDict):
     periods_list: dict
-
 class Outputs(typing.TypedDict):
-    markdown_output: str
-    periods_count: int
+    markdown_output: typing.NotRequired[str]
+    periods_count: typing.NotRequired[float]
 #endregion
 
 from oocana import Context

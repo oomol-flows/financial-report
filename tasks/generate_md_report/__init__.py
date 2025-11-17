@@ -6,10 +6,10 @@ class Inputs(typing.TypedDict):
     company_name: str | None
     save_path: str | None
 class Outputs(typing.TypedDict):
-    md_content: str
-    file_path: str
-    status: str
-    title: str
+    md_content: typing.NotRequired[str]
+    file_path: typing.NotRequired[str]
+    status: typing.NotRequired[str]
+    title: typing.NotRequired[str]
 #endregion
 
 from oocana import Context
